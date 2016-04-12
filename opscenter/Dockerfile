@@ -10,9 +10,6 @@ RUN echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /e
 	&& curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add - \
 	&& apt-get update && apt-get -y install opscenter
 
-# Add Opscenter Config File
-ADD opscenterd.conf /etc/opscenter/opscenterd.conf
-
 # Add service starutp scripts
 RUN mkdir -p /etc/service/opscenter
 ADD start-opscenter.sh /etc/service/opscenter/run

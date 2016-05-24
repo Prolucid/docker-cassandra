@@ -2,10 +2,11 @@ FROM phusion/baseimage
 MAINTAINER Daniel Covello 
 ENV DEBIAN_FRONTEND noninteractive
 
+ENV CASSANDRA_VERSION 3.5
+
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
 
-# Add PPA for the necessary JDK
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" | tee /etc/apt/sources.list.d/webupd8team-java.list
 RUN echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
@@ -15,7 +16,7 @@ RUN apt-get update
 RUN apt-get install -y curl
 
 # Preemptively accept the Oracle License
-RUN echo "oracle-java7-installer	shared/accepted-oracle-license-v1-1	boolean	true" > /tmp/oracle-license-debconf
+RUN echo "oracle-java8-installer	shared/accepted-oracle-license-v1-1	boolean	true" > /tmp/oracle-license-debconf
 RUN /usr/bin/debconf-set-selections /tmp/oracle-license-debconf
 RUN rm /tmp/oracle-license-debconf
 
@@ -23,11 +24,9 @@ RUN rm /tmp/oracle-license-debconf
 RUN apt-get install -y oracle-java8-installer oracle-java8-set-default
 RUN apt-get update
 
-# Define Cassandra version
-RUN echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/datastax.sources.list
-RUN curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
-RUN apt-get update
-RUN apt-get install -y dsc22=2.2.3-1 cassandra=2.2.3 datastax-agent
+RUN echo "deb http://debian.datastax.com/datastax-ddc $CASSANDRA_VERSION main" | sudo tee -a etc/apt/sources.list.d/cassandra.sources.list
+RUN curl -L https://debian.datastax.com/debian/repo_key | sudo apt-key add -
+RUN apt-get update && apt-get -y install datastax-ddc
 
 # Copy Cassandra Startup Scripts
 RUN mkdir /etc/service/cassandra

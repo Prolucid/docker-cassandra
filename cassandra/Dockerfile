@@ -1,4 +1,4 @@
-FROM phusion/baseimage:rel-0.9.18 
+FROM phusion/baseimage:0.9.15 
 MAINTAINER Daniel Covello 
 ENV DEBIAN_FRONTEND noninteractive
 

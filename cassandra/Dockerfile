@@ -24,8 +24,8 @@ RUN rm /tmp/oracle-license-debconf
 RUN apt-get install -y oracle-java8-installer oracle-java8-set-default
 RUN apt-get update
 
-RUN echo "deb http://debian.datastax.com/datastax-ddc $CASSANDRA_VERSION main" | sudo tee -a etc/apt/sources.list.d/cassandra.sources.list
-RUN curl -L https://debian.datastax.com/debian/repo_key | sudo apt-key add -
+RUN echo "deb http://debian.datastax.com/datastax-ddc $CASSANDRA_VERSION main" | tee -a etc/apt/sources.list.d/cassandra.sources.list
+RUN curl -L https://debian.datastax.com/debian/repo_key | apt-key add -
 RUN apt-get update && apt-get -y install datastax-ddc
 
 # Copy Cassandra Startup Scripts

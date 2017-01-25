@@ -28,7 +28,7 @@ RUN apt-get update
 RUN wget http://launchpadlibrarian.net/109052632/python-support_1.0.15_all.deb \
     && dpkg -i python-support_1.0.15_all.deb \
 
-RUN echo "deb http://debian.datastax.com/datastax-ddc $CASSANDRA_VERSION main" | tee -a etc/apt/sources.list.d/cassandra.sources.list
+RUN echo "deb http://debian.datastax.com/datastax-ddc $CASSANDRA_VERSION main" | tee -a /etc/apt/sources.list.d/cassandra.sources.list
 RUN curl -L https://debian.datastax.com/debian/repo_key | apt-key add -
 RUN apt-get update && apt-get -y install datastax-ddc
 

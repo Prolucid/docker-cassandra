@@ -2,7 +2,7 @@ FROM phusion/baseimage:0.9.19
 MAINTAINER Daniel Covello 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV CASSANDRA_VERSION 3.5
+ENV CASSANDRA_VERSION 3.9
 
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
@@ -21,8 +21,8 @@ RUN /usr/bin/debconf-set-selections /tmp/oracle-license-debconf
 RUN rm /tmp/oracle-license-debconf
 
 # Add cassandre repo
-RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 514A2AD631A57A16DD0047EC749D6EEC0353B12C && \
-    echo 'deb http://www.apache.org/dist/cassandra/debian 35x main' >> /etc/apt/sources.list.d/cassandra.list
+RUN apt-key adv --keyserver pool.sks-keyservers.net --recv-key A278B781FE4B2BDA \ 
+    && echo 'deb http://www.apache.org/dist/cassandra/debian 39x main' >> /etc/apt/sources.list.d/cassandra.list
 
 
 # Install the JDK
@@ -40,16 +40,6 @@ RUN apt-get update -y && apt-get install -y software-properties-common \
     && dpkg -i python-support_1.0.15_all.deb \
     && apt-get install -y cassandra="$CASSANDRA_VERSION" \
     && rm -rf /var/lib/apt/lists/*
-
-##Instal missing python-support
-#RUN apt-get update && apt-get install ajenti \
-#    && wget http://launchpadlibrarian.net/109052632/python-support_1.0.15_all.deb \
-#    && dpkg -i python-support_1.0.15_all.deb
-
-#RUN echo "deb http://debian.datastax.com/datastax-ddc $CASSANDRA_VERSION main" | tee -a /etc/apt/sources.list.d/cassandra.sources.list
-#RUN cat /etc/apt/sources.list.d/cassandra.sources.list
-#RUN curl -L https://debian.datastax.com/debian/repo_key | apt-key add -
-#RUN apt-get update && apt-get -y install ajenti datastax-ddc
 
 # Copy Cassandra Startup Scripts
 RUN mkdir /etc/service/cassandra

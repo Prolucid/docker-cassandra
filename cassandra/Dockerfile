@@ -2,7 +2,7 @@ FROM phusion/baseimage:0.9.19
 MAINTAINER Daniel Covello 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV CASSANDRA_VERSION 3.9
+ENV CASSANDRA_VERSION 3.10
 
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
@@ -22,7 +22,7 @@ RUN rm /tmp/oracle-license-debconf
 
 # Add cassandre repo
 RUN apt-key adv --keyserver pool.sks-keyservers.net --recv-key A278B781FE4B2BDA \ 
-    && echo 'deb http://www.apache.org/dist/cassandra/debian 39x main' >> /etc/apt/sources.list.d/cassandra.list
+    && echo 'deb http://www.apache.org/dist/cassandra/debian 310x main' >> /etc/apt/sources.list.d/cassandra.list
 
 
 # Install the JDK
